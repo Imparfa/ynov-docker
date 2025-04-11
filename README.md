@@ -52,6 +52,8 @@ USE ynov;
 SHOW TABLES;
 ```
 
+![screen.png](screen.png)
+
 ## Nettoyage
 
 Pour arrêter et supprimer le conteneur :
