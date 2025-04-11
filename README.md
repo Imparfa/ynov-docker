@@ -36,6 +36,8 @@ docker run -d --name mysql-lab-container `
   mysql-lab
 ```
 
+![screen-docker.png](screen-docker.png)
+
 ### 3. Connexion à MySQL dans le conteneur
 
 ```powershell
@@ -52,7 +54,7 @@ USE ynov;
 SHOW TABLES;
 ```
 
-![screen.png](screen.png)
+![screen-database.png](screen-database.png)
 
 ## Nettoyage
 
