@@ -5,7 +5,7 @@ Ce projet initialise une base de données MySQL dans un conteneur Docker avec un
 ## Structure du projet
 
 ```
-docker-mysql-lab/
+ynov-docker/
 ├── Dockerfile
 ├── .env
 ├── init.sql
