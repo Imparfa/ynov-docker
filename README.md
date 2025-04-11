@@ -2,6 +2,10 @@
 
 Ce projet initialise une base de données MySQL dans un conteneur Docker avec un script SQL de création automatique.
 
+```
+git clone https://github.com/Imparfa/ynov-docker.git
+```
+
 ## Structure du projet
 
 ```
