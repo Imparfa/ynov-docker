@@ -1,70 +1,111 @@
-# Docker MySQL Lab
+# Flask API with MySQL using Docker Compose
 
-Ce projet initialise une base de données MySQL dans un conteneur Docker avec un script SQL de création automatique.
+This project provides a simple setup for running a Flask REST API connected to a MySQL database using Docker Compose. It includes automated database initialization and environment variable management for secure configuration.
 
-```
-git clone https://github.com/Imparfa/ynov-docker.git
-```
-
-## Structure du projet
+## Project Structure
 
 ```
 ynov-docker/
-├── Dockerfile
-├── .env
-├── init.sql
-└── README.md
+├── api/
+│   ├── app.py              # Flask application
+│   ├── Dockerfile          # Docker image for Flask
+│   ├── requirements.txt    # Python dependencies
+├── db/
+│   └── init.sql            # SQL initialization script
+├── .env                    # Environment variables (not committed)
+├── .env.example            # Sample .env file for reference
+├── docker-compose.yml      # Docker Compose configuration
+├── README.md               # Project documentation
+└── captures/               # Screenshots (to be added manually)
 ```
 
-## Variables d’environnement (.env)
+## Environment Variables
 
-```env
+`.env` file:
+
+```
 MYSQL_ROOT_PASSWORD=root
 MYSQL_DATABASE=ynov
+MYSQL_USER=admin
+MYSQL_PASSWORD=admin123
 ```
 
-## Étapes de construction et d’exécution (PowerShell - Windows)
+## Setup Instructions
 
-### 1. Construction de l’image Docker
+### Build and launch containers
 
-```powershell
-docker build -t mysql-lab .
+```
+docker-compose up -d
 ```
 
-### 2. Lancement du conteneur
+### Check running containers
 
-```powershell
-docker run -d --name mysql-lab-container `
-  --env-file .env `
-  -p 3306:3306 `
-  mysql-lab
+```
+docker ps
+```
+![ex2-docker.png](screenshots/ex2-docker.png)
+The services `flask-api` and `mysql-db` should be listed.
+
+## API Testing
+
+The API can be accessed via a browser or using `curl`:
+
+```
+curl http://localhost:5000/utilisateurs
 ```
 
-![screen-docker.png](screen-docker.png)
+Expected response format:
 
-### 3. Connexion à MySQL dans le conteneur
+```json
+[
+  {
+    "id": 1,
+    "nom": "Alice",
+    "email": "alice@example.com"
+  },
+  ...
+]
+```
+![ex2-curl.png](screenshots/ex2-curl.png)
 
-```powershell
-docker exec -it mysql-lab-container mysql -uroot -p
+## API Loging
+
+The API can be logged using `docker logs`:
+
+```
+docker logs flask-api
 ```
 
-Entrez ensuite le mot de passe `root`.
+Expected response format:
 
-### 4. Vérifications SQL
+![ex2-logs.png](screenshots/ex2-logs.png)
 
-```sql
-SHOW DATABASES;
-USE ynov;
-SHOW TABLES;
+## Verification Checklist
+
+- Flask API is accessible.
+- MySQL is initialized with a predefined database and table.
+- Containers communicate correctly.
+- Docker Compose configuration functions as expected.
+
+## Cleanup
+
+To stop and remove containers and volumes:
+
+```
+docker-compose down -v
 ```
 
-![screen-database.png](screen-database.png)
+## Known Issues and Workarounds
 
-## Nettoyage
+- A delay in MySQL availability may prevent Flask from connecting immediately. This is handled using a retry mechanism to delay the Flask startup until MySQL is ready.
+- Ensure service names used in the database connection match those defined in `docker-compose.yml`.
 
-Pour arrêter et supprimer le conteneur :
+## Repository Content Requirements
 
-```powershell
-docker stop mysql-lab-container
-docker rm mysql-lab-container
-```
+The repository should include:
+
+- `docker-compose.yml`
+- API `Dockerfile`
+- `init.sql` script
+- Project `README.md`
+- `screenshots/` folder
