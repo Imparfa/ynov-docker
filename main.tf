@@ -11,6 +11,6 @@ provider "scalingo" {
 }
 
 resource "scalingo_app" "my_app" {
-  name = "nom-de-mon-app"
+  name = "ynov-devops"
   region = "osc-fr1"
 }
