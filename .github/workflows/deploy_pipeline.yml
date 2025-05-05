@@ -1,0 +1,40 @@
+name: Provision and Deploy Scalingo
+
+on:
+  push:
+    branches:
+      - prod
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Initialize Terraform
+        run: terraform init
+
+      - name: Plan Terraform
+        run: terraform plan
+
+      - name: Apply Terraform
+        run: terraform apply -auto-approve
+        env:
+          SCALINGO_TOKEN: ${{ secrets.SCALINGO_TOKEN }}
+
+  deploy:
+    needs: terraform
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to Scalingo
+        uses: kolok/deploy-to-scalingo@v1
+        with:
+          scalingo_token: ${{ secrets.SCALINGO_TOKEN }}
+          app_name: 'ynov-devops'
