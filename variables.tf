@@ -1,0 +1,1 @@
+variable "scalingo_token" {}
