@@ -6,9 +6,7 @@ terraform {
   }
 }
 
-provider "scalingo" {
-  token = var.scalingo_token
-}
+provider "scalingo" {}
 
 resource "scalingo_app" "my_app" {
   name = "ynov-devops"

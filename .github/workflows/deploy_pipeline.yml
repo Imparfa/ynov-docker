@@ -17,12 +17,18 @@ jobs:
 
       - name: Initialize Terraform
         run: terraform init
+        env:
+          SCALINGO_API_TOKEN: ${{ secrets.SCALINGO_TOKEN }}
 
       - name: Plan Terraform
-        run: terraform plan -var "scalingo_token=${{ secrets.SCALINGO_TOKEN }}"
+        run: terraform plan
+        env:
+          SCALINGO_API_TOKEN: ${{ secrets.SCALINGO_TOKEN }}
 
       - name: Apply Terraform
-        run: terraform apply -auto-approve -var "scalingo_token=${{ secrets.SCALINGO_TOKEN }}"
+        run: terraform apply -auto-approve
+        env:
+          SCALINGO_API_TOKEN: ${{ secrets.SCALINGO_TOKEN }}
 
   deploy:
     needs: terraform
