@@ -40,5 +40,5 @@ jobs:
       - name: Deploy to Scalingo
         uses: kolok/deploy-to-scalingo@v1
         with:
-          scalingo_token: ${{ secrets.SCALINGO_TOKEN }}
-          app_name: 'ynov-devops'
+          ssh-private-key: ${{ secrets.SCALINGO_TOKEN }}
+          app-name: 'ynov-devops'
